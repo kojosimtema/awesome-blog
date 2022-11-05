@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div>
+    <h2>Update Profile</h2>
+</div>
+<div class="form">
+      
+    <form action="{{url_for('user.update_user', username=current_user.username)}}" method="POST">
+        <label for="firstName">First Name</label><br><br>
+        <input type="text" name="first_name" value="{{current_user.first_name}}" required><br><br>
+        <label for="lastName">Last Name</label><br><br>
+        <input type="text" name="last_name"  value="{{current_user.last_name}}" required><br><br>
+        <label for="username">Username</label><br><br>
+        <input type="text" name="username"  value="{{current_user.username}}" required><br><br>
+        <label for="email">Email</label><br><br>
+        <input type="email" name="email" value="{{current_user.email}}" required><br><br>
+        <input type="submit" class="submit inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" value="Save">
+    </form>
+        
+</div>
+
+{% endblock content %}

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='styles/styles.css')}}">
+    <script src="{{url_for('static', filename='scripts/index.js')}}"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+    <script>
+        tailwind.config = {
+          theme: {
+            extend: {
+              colors: {
+                clifford: '#da373d',
+              }
+            }
+          }
+        }
+      </script>
+      <style type="text/tailwindcss">
+        @layer utilities {
+          .content-auto {
+            content-visibility: auto;
+          }
+        }
+      </style>
+    <title>Awesome Blog</title>
+</head>
+<body class="">
+    <header>
+        <div  class="lg:content-auto">
+            <h1>Blog App</h1>
+        </div>
+      
+        <nav class="bg-white px-2 sm:px-4 py-2.5 dark:bg-gray-900 fixed w-full z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600">
+            {% if current_user.is_authenticated %}
+  
+            <div class="container flex flex-wrap justify-between items-center mx-auto">
+                <a href="" class="flex items-center">
+                   <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">{{current_user.first_name}}</span>
+                </a>
+
+
+                <div>
+                    <ul class="flex flex-col p-4 mt-4 bg-gray-50 rounded-lg border border-gray-100 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+                    
+                        <li><a href="{{url_for('post.home')}}" class="block py-2 pr-4 pl-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white" aria-current="page">Home</a></li>
+                        <li><a href="{{url_for('post.get_post_by_user', username=current_user.username)}}" class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Profile</a></li>
+                        <li><a href="{{url_for('user.logout')}}" class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Logout</a></li>                    
+                                    
+                    </ul>
+                </div>
+
+                <div class="flex md:order-2">
+                    <a href="{{url_for('post.post')}}"><button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Create a Post</button></a>
+                </div>
+            </div>
+            {%else%}
+
+           
+            <div class="container flex flex-wrap justify-between items-center mx-auto">
+                <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Welcome</span>
+         
+
+                <div>
+                    <ul class="flex flex-col p-4 mt-4 bg-gray-50 rounded-lg border border-gray-100 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">    
+                
+                        <li><a href="{{url_for('post.home')}}" class="block py-2 pr-4 pl-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white" aria-current="page">Home</a></li>               
+                        <li><a href="{{url_for('user.login')}}" class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Login</a></li>
+                        <li><a href="{{url_for('user.signup')}}" class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Sign Up</a></li> 
+                        
+                    </ul>
+                </div>
+            
+                <div class="flex md:order-2">
+                    <a href="{{url_for('post.post')}}"><button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Create a Post</button></a>
+                </div>
+            </div>  
+            {%endif%}
+        </nav>
+  
+    </header>
+
+    <main>
+        <div>
+            {% block content %}
+
+            
+            {% endblock content %}
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer p-4 bg-white rounded-lg shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-gray-800 ">
+            <div>
+                <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400"> &copy; <script>document.write(new Date().getFullYear())</script>  Jason Kojo Simtema™. All Rights Reserved.
+                </span>
+            </div>
+    
+            <div>
+                <ul class="footer_list">
+                    <li>
+                        <a href="https://github.com/kojosimtema" class="hover:underline"><img src="/static/images/GitHub-Mark.png" alt=""></a>
+                    </li>
+                    <li>
+                        <a href="https://mail.google.com/kojosimtema@gmail.com" class="hover:underline"><img src="/static/images/gmail.jpg" alt=""></a>
+                    </li>
+                    <li>
+                        <a href="https://twitter.com/KojoSta" class="hover:underline"><img src="/static/images/1051382_twitter.png" alt=""></a>
+                    </li>
+                    <li>
+                        <a href="https://www.youtube.com/channel/UCH2PaR0mW-O7OrjwIoqv2uQ" class="mr-4 hover:underline"><img src="/static/images/1077046_youtube.png" alt=""></a>
+                    </li>
+                    <li>
+                        <a href="https://www.facebook.com/kojo.aweh/" class="mr-4 hover:underline"><img src="/static/images/1077041_fb.png" alt=""></a>
+                    </li>
+                    <li>
+                        <a href="https://www.instagram.com/kojosimtema" class="hover:underline"><img src="/static/images/733614_insta.png" alt=""></a>
+                    </li>
+                    <li>
+                        <a href="https://www.linkedin.com/in/jason-kojo-simtema-513643bb/" class="hover:underline"><img src="/static/images/index.png" alt=""></a>
+                    </li>
+                </ul>
+            </div>        
+
+        </div>
+        
+        
+    </footer>
+
+</body>
+</html>
