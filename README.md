@@ -3,7 +3,7 @@
 
 ## About
 
-- This application was developed as project whiles studying at Altschool Africa
+- This application was developed as project whiles studying at [Altschool Africa](https://altschoolafrica.com/schools/engineering)
 
 - It is a blog application where users can post thier articles or blogs
 
