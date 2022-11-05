@@ -61,7 +61,7 @@ python -m flask run
 
 ![Awesome Blog_Post_HomePage_LoggedIn](https://user-images.githubusercontent.com/53656050/200135226-d534c067-c9a8-439f-9a55-1b093c95cab5.png)
 
-### *User Profile with no posts viewed by user*
+### *User Profile with no posts, viewed by user*
 
 ![Awesome Blog_Profile_No_Posts](https://user-images.githubusercontent.com/53656050/200135208-bb4099b3-cafd-436b-9bd8-42bfdf8a417c.png)
 
@@ -69,7 +69,7 @@ python -m flask run
 
 ![Awesome Blog_Profile_User](https://user-images.githubusercontent.com/53656050/200135219-1104b9a5-4934-4fd0-91b8-a151245a1252.png)
 
-# *User Profile viewed by others*
+## *User Profile viewed by others*
 
 ![Awesome Blog_Profile_Other_User](https://user-images.githubusercontent.com/53656050/200135218-79061340-999a-439f-b2f3-6b43dbb16922.png)
 
