@@ -4,10 +4,15 @@ from app.main.db import session
 
 class user_service():
 
-    def update_user(self, username: str, fname: str, lname: str, new_username: str, email: str):
+    def update_user(self, username: str, fname: str, lname: str, new_username: str, email: str, display_pic: str, background_pic: str):
         
         user_to_update = session.query(User).filter_by(username=username).first()
         
+        if display_pic != '':
+            user_to_update.display_pic = display_pic
+        if background_pic != '':
+            user_to_update.background_pic = background_pic
+
         user_to_update.first_name = fname
         user_to_update.last_name = lname
         user_to_update.username = new_username

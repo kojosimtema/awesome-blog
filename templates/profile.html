@@ -8,11 +8,19 @@
               
     <div class="profile-img">
         
-      <div class="header-img">
-        <img style="max-width: inherit;" src="/static/images/Nizza-Côte_d'Azur.jpg" alt="">
-      </div>
+      <a href="{{url_for('user.show_image', filename=blogger.background_pic)}}">
+        <div class="header-img">
+          <img style="width: inherit;" src="/static/images/{{blogger.background_pic}}" alt="">
+        </div>
+      </a>
+      
+      <!-- <div class="dp-img">
+        <img style="width: 100%; height: inherit" src="/static/images/{{blogger.display_pic}}" alt="">
+      </div> -->
       <div class="dp-img">
-        <img style="max-height: inherit;" src="/static/images/photo.jpg" alt="">
+        <a style="display: flex; justify-content: center;" href="{{url_for('user.show_image', filename=blogger.display_pic)}}">
+          <img src="/static/images/{{blogger.display_pic}}" alt="">
+        </a> 
       </div>
     </div>
 
@@ -42,7 +50,7 @@
     {% for post in user_posts %}
     <div class="blog-card flex flex-col items-center bg-white rounded-lg border shadow-md md:flex-row hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
       <div class="blog-img">
-        <img class="card-img object-cover w-full h-96 rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src="/static/images/photo.jpg" alt="">
+        <img class="card-img object-cover w-full h-96 rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src="/static/images/{{post.image}}" alt="">
       </div>
       <div style="max-width: 600px" class="flex flex-col justify-between p-4 leading-normal">
         <p>Written by: <a class="hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 hover:underline" href="{{url_for('post.get_post_by_user', username=post.username)}}">{{post.username}}</a></p>
@@ -82,11 +90,19 @@
 
     <div class="profile-img">
         
-      <div class="header-img">
-        <img style="max-width: inherit;" src="/static/images/Nizza-Côte_d'Azur.jpg" alt="">
-      </div>
+      <a href="{{url_for('user.show_image', filename=blogger.background_pic)}}">
+        <div class="header-img">
+          <img style="width: inherit;" src="/static/images/{{blogger.background_pic}}" alt="">
+        </div>
+      </a>
+      
+      <!-- <div class="dp-img">
+        <img style="width: 100%; height: inherit" src="/static/images/{{blogger.display_pic}}" alt="">
+      </div> -->
       <div class="dp-img">
-        <img style="max-height: inherit;" src="/static/images/photo.jpg" alt="">
+        <a style="display: flex; justify-content: center;" href="{{url_for('user.show_image', filename=blogger.display_pic)}}">
+          <img src="/static/images/{{blogger.display_pic}}" alt="">
+        </a>  
       </div>
     </div>
 
@@ -106,7 +122,7 @@
     {% for post in user_posts %}
     <div class="blog-card flex flex-col items-center bg-white rounded-lg border shadow-md md:flex-row hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
       <div class="blog-img">
-        <img class="card-img object-cover w-full h-96 rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src="/static/images/photo.jpg" alt="">
+        <img class="card-img object-cover w-full h-96 rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src="/static/images/{{post.image}}" alt="">
       </div>
       <div style="max-width: 600px" class="flex flex-col justify-between p-4 leading-normal">
         <p>Written by: <a class="hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 hover:underline" href="{{url_for('post.get_post_by_user', username=post.username)}}">{{post.username}}</a></p>

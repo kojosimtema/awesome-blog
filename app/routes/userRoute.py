@@ -1,10 +1,14 @@
-from flask import flash, render_template, request, redirect, url_for, Blueprint
+from flask import flash, render_template, request, redirect, url_for, Blueprint, current_app
 from flask_login import login_user, logout_user
 from werkzeug.security import generate_password_hash
+from werkzeug.utils import secure_filename
 from app.main.models.user import User
 from app.main.auth.userauth import login_auth, signup_auth
 from app.main.services.userservices import user_service
+from app.main.services import allowed_file
 from app.main.db import session
+import uuid
+import os
 
 
 
@@ -51,17 +55,21 @@ def create_user():
                     return redirect(url_for('user.login'))
 
                 flash('Your password should have more the 5 characters')
-                return render_template("signup.html")
+                return render_template("signup.html", first_name=first_name, last_name=last_name, 
+                                    username=username, email=email, password=password, confirm=confirm_password)
                 
             flash('Passwords do not match')
-            return render_template("signup.html")
+            return render_template("signup.html", first_name=first_name, last_name=last_name, 
+                                username=username, email=email, password=password, confirm=confirm_password)
 
         flash('Username already exits')
-        return render_template("signup.html")
+        return render_template("signup.html", first_name=first_name, last_name=last_name, 
+                            username=username, email=email, password=password, confirm=confirm_password)
 
 
     flash('Email already exits')
-    return render_template("signup.html")
+    return render_template("signup.html", first_name=first_name, last_name=last_name, 
+                        username=username, email=email, password=password, confirm=confirm_password)
 
 
 
@@ -89,7 +97,7 @@ def signin_user():
         return redirect(url_for('post.home'))
 
     flash('Your credentials do not match')
-    return redirect(url_for('.login'))
+    return render_template('signin.html', email=email, password=password)
 
 
 @user_bl.get('/profile/update')
@@ -105,10 +113,34 @@ def update_user(username):
     last_name = request.form.get('last_name')
     new_username = request.form.get('username')
     email = request.form.get('email')
+    display_pic = request.files['display_pic']
+    background_pic = request.files['background_pic']
+
+    display_pic_name = secure_filename(display_pic.filename)
+    background_pic_name = secure_filename(background_pic.filename)
+    
+
+    if display_pic:
+        if allowed_file(display_pic_name) != True:
+            flash('Your file should be of the following extension: jpg, png, jpeg')
+            return render_template('userupdate.html')
+        else:
+            display_pic_name = str(uuid.uuid4().time_low) + display_pic_name
+            display_pic.save(os.path.join(current_app.config["UPLOAD_FOLDER"], display_pic_name))
+    
+    if background_pic:
+        if allowed_file(background_pic_name) != True:
+            flash('Your file should be of the following extension: jpg, png, jpeg')
+            return render_template('userupdate.html')
+        else:
+            background_pic_name = str(uuid.uuid4().time_low) + background_pic_name
+            background_pic.save(os.path.join(current_app.config["UPLOAD_FOLDER"], background_pic_name))
+    
+
     # user = session.query(User).get(user_id)
 
     user_to_update = user_service()
-    user_to_update.update_user(username, first_name, last_name, new_username, email)
+    user_to_update.update_user(username, first_name, last_name, new_username, email, display_pic_name, background_pic_name)
 
     
     return redirect(url_for('post.update_post_username', username=username, new_username=new_username))
@@ -131,15 +163,24 @@ def change_password(username):
     if user_auth.check_password(old_password, confirm_password) == True:
         password_to_change = user_service()
 
-        if password_to_change.update_password(username, old_password, new_password) == True:
+        if len(new_password) > 5:
+            if password_to_change.update_password(username, old_password, new_password) == True:
 
-            return redirect(url_for('post.get_post_by_user', username=username))
+                return redirect(url_for('post.get_post_by_user', username=username))
 
-        flash('An error has occured')    
-        return render_template('changepassword.html')
+            flash('An error has occured')    
+            return render_template('changepassword.html', old_password=old_password, confirm_password=confirm_password, new_password=new_password)
+        
+        flash('Your password should have more the 5 characters')    
+        return render_template('changepassword.html', old_password=old_password, confirm_password=confirm_password, new_password=new_password)
 
     flash('your credentials do not match')
-    return render_template('changepassword.html')
+    return render_template('changepassword.html', old_password=old_password, confirm_password=confirm_password, new_password=new_password)
+
+@user_bl.get('/display/<filename>')
+def show_image(filename):
+    # return redirect(url_for('static', filename='images/' + filename))
+    return render_template('showimage.html', filename=filename)
 
     
 @user_bl.get('/logout')

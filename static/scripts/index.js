@@ -24,4 +24,8 @@ function deleteAlert(){
       alert('Are you sure you want to delete this post?')
 }
 
+function hideAlert () {
+      document.querySelector('#alert-2').style.display = "none";
+}
+
 

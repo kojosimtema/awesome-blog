@@ -4,8 +4,8 @@
 {% if read_post %}
 <div class="read">
     <div class="bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
-        <div>
-          <img class="rounded-t-lg" src="/static/images/photo.jpg" alt="">
+        <div style="display:flex; justify-content:center; max-height:380px; min-height:100%">
+          <img class="rounded-t-lg" src="/static/images/{{read_post.image}}" alt="">
         </div>
       <div class="p-5">
         <p>Written by: <a class="hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 hover:underline" href="{{url_for('post.get_post_by_user', username=read_post.username)}}">{{read_post.username}}</a></p>

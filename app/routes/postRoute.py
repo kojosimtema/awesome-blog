@@ -1,12 +1,15 @@
 
-from flask import flash, render_template, request, redirect, url_for, Blueprint
+from flask import flash, render_template, request, redirect, url_for, Blueprint, current_app
 from flask_login import current_user, login_required 
 from app.main.models.post import Post
 from app.main.models.user import User
 from app.main.services.postservices import post_service
+from app.main.services import allowed_file
 from app.main.db import session
-
-# from app import app
+from werkzeug.utils import secure_filename
+import uuid
+import os
+# from run import create_app
 
 post_bl = Blueprint('post', __name__)
 
@@ -131,9 +134,25 @@ def add_post(username):
     # if request.method == 'POST':
     title = request.form.get('title')
     content = request.form.get('content')
-
+    image = request.files['image']
+    image_name = secure_filename(image.filename)
+    
+    # image.save(os.path.join(current_app.config["UPLOAD_FOLDER"], image_name))
+        
+    if image:
+        
+        if allowed_file(image_name) != True:
+            flash('Your image should be of the following extensions: jpg, png, jpeg')
+            return render_template('post.html', title=title, content=content, image=image_name)
+        else:
+            image_name = str(uuid.uuid4().time_low) + image_name
+            image.save(os.path.join(current_app.config["UPLOAD_FOLDER"], image_name))
+        
+        # new_post.create_post(title, content, username, image_name)
     new_post = post_service()
-    new_post.create_post(title, content, username)
+    new_post.create_post(title, content, username, image_name)
+
+    # new_post.create_post(title, content, username)
         # new_post = Post(title=title, content=content, user_id=user_id)
         
         
@@ -150,9 +169,22 @@ def edit_post(post_id):
     if request.method == 'POST':
         title = request.form.get('title')
         content = request.form.get('content')
+        image = request.files['image']
+        image_name = secure_filename(image.filename)
+
+        if image:
+
+            if allowed_file(image_name) != True:
+                flash('Your image should be of the following extensions: jpg, png, jpeg')
+                return redirect(url_for('.get_post_by_id', post_id=post.id))
+            else:                    
+                # os.unlink(os.path.join(current_app.config["UPLOAD_FOLDER"], post.image))
+                image_name = str(uuid.uuid4().time_low) + image_name
+                image.save(os.path.join(current_app.config["UPLOAD_FOLDER"], image_name))
+
 
         updated_post = post_service()
-        updated_post.update_post(title, content, post_id)
+        updated_post.update_post(title, content, post_id, image_name)
         # new_post = Post(title=title, content=content, user_id=user_id)
         
         
