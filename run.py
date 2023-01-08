@@ -19,7 +19,7 @@ UPLOAD_FOLDER = 'static/images/'
 app = Flask(__name__)
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
-app.config["SECRET_KEY"] = '6ead16367a858a8ca2ed8c2e'
+app.config["SECRET_KEY"] = 'YOUR_SECRET_KEY'
 
 
 app.register_blueprint(post_bl)
