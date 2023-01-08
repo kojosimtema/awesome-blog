@@ -17,23 +17,42 @@
 
 - A user needs to create an account to be able to post a blog however, any one can view blogs that have been posted
 
+## Update
+After the first commit I updated this application. Below are the new things I added to the application
+- Upload of post image. I was using static images for all posts that were created in the previous version. I have now added an option to allow users add an image to their post and be able to update it as well
+
+- Upload of user profile picture. Just as the post images, I was using static images for all user profile pictures. This time around, I've made it posible for users to update thier profile by adding a profile picture and a background picture
+
+- Reload form without clearing data. In the previous version of this application, anything there's an error in a form being filled by a user, the page reloads and display the error message. This cleared all the information the user has filled in the form, hence they have to refill the form all over again. I have resolved this by making the form reload without clearing the form so that the user can continue from where they left off
+
 ## How to run this app
 
-1. Activate virtual environment
+1. Create a virtual environment using your terminal
 ```
-source blogenv/Scripts/activate
+python -m venv your_environment_name
 ```
 
-2. Install all Packages from Requirements.txt file
+2. Activate virtual environment
+
+Windows
+```
+source your_environment_name/Scripts/activate
+```
+linux/macOS
+```
+source your_environment_name/bin/activate
+```
+
+3. Install all Packages from requirements.txt file
 ```
 pip install -r requirements.txt
 ```
 
-3. Run the application
+4. Run the application
 ```
 flask run
 ```
-- if flask run does not work try..
+- if "flask run" does not work try..
 ```
 python -m flask run
 ```
@@ -67,11 +86,10 @@ python -m flask run
 
 ### *User Profile with posts*
 
-![Awesome Blog_Profile_User](https://user-images.githubusercontent.com/53656050/200135219-1104b9a5-4934-4fd0-91b8-a151245a1252.png)
+![Profile_same_user_Awesome Blog](https://user-images.githubusercontent.com/53656050/211207306-0db6a145-4971-40ff-8788-4f5e402c9719.png)
 
 ## *User Profile viewed by others*
 
-![Awesome Blog_Profile_Other_User](https://user-images.githubusercontent.com/53656050/200135218-79061340-999a-439f-b2f3-6b43dbb16922.png)
-
+![Profile_Other_user_Awesome Blog](https://user-images.githubusercontent.com/53656050/211207342-68145414-2b6d-4762-bf50-32cbb9359292.png)
 
 
