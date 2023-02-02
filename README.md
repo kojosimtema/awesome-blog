@@ -17,6 +17,8 @@
 
 - A user needs to create an account to be able to post a blog however, any one can view blogs that have been posted
 
+- You can read more on how this application was built [here](https://kojosimtema.hashnode.dev/create-a-blog-app-using-flask)
+
 ## Update
 After the first commit I updated this application. Below are the new things I added to the application
 - Upload of post image. I was using static images for all posts that were created in the previous version. I have now added an option to allow users add an image to their post and be able to update it as well
